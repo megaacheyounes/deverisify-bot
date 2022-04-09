@@ -4,18 +4,20 @@
   "description": "A simple bot that matches prices on Uniswap when market-making on DeversiFi",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "setup":"node setup.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DeversiFi/uniswap-matching-bot.git"
+    "url": "git+https://github.com/megaacheyounes/uniswap-matching-bot.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DeversiFi/uniswap-matching-bot/issues"
+    "url": "https://github.com/megaacheyounes/uniswap-matching-bot/issues"
   },
-  "homepage": "https://github.com/DeversiFi/uniswap-matching-bot#readme",
+  "homepage": "https://github.com/megaacheyounes/uniswap-matching-bot#readme",
   "dependencies": {
     "@ethersproject/contracts": "^5.6.0",
     "@ethersproject/providers": "^5.6.2",

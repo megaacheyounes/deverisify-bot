@@ -18,7 +18,7 @@ onStartUp()
 
 let pair, routeBuy, routeSell, buySide, sellSide, midPrice
 async function marketMake () {
-  const marketMarketImpl = async () => {
+  const marketMakeImpl = async () => {
     
     pair = await Fetcher.fetchPairData(tokenQuote, tokenBase, provider)
     routeBuy = new Route([pair], tokenBase)
@@ -34,9 +34,9 @@ async function marketMake () {
     }
   }
 
-  marketMarketImpl()
+  marketMakeImpl()
 
-  setInterval(marketMarketImpl, 180000)
+  setInterval(marketMakeImpl, 180000)
 }
 
 async function onStartUp () {
