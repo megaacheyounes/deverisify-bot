@@ -10,7 +10,7 @@ This bot allows high speed-trading on a completely non-custodial exchange.
 2. `git clone https://github.com/megaacheyounes/uniswap-matching-bot.git`
 3. Copy `config.example.js` => `config.js`
 4. Get an Alchemy URL and enter use it to populate the config file: [here](https://github.com/megaacheyounes/uniswap-matching-bot/blob/main/config.example.js#L5)
-5. Enter your Ethereum private key here (prefixed with 0x): [here](https://github.com/megaacheyounes/uniswap-matching-bot/blob/main/config.example.js#L3)
+5. Enter your Ethereum private key here (without prefix 0x): [here](https://github.com/megaacheyounes/uniswap-matching-bot/blob/main/config.example.js#L3)
 6. Choose the market pair you want to trade and update it [here](https://github.com/megaacheyounes/uniswap-matching-bot/blob/main/config.example.js#L4)
 
 Once the above setup is complete, you can use the following instructions:

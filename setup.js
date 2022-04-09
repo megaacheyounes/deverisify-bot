@@ -20,7 +20,7 @@ const { PRIVATE_KEY } = require('./config')
   await register(dvf)
 
   console.log(`Depositing ${depositValue}ETH`)
-  await dvf.deposit('ETH', depositValue, PRIVATE_KEY.substring(2))
+  await dvf.deposit('ETH', depositValue, PRIVATE_KEY )
   console.log('Deposit OK, please wait a few minutes for the confirmations')
   process.exit(1)
 })().catch((error) => {
@@ -33,7 +33,7 @@ async function register (dvf) {
 
   if (!config.isRegistered) {
     console.log('Registering...')
-    const keyPair = await dvf.stark.createKeyPair(PRIVATE_KEY.substring(2))
+    const keyPair = await dvf.stark.createKeyPair(PRIVATE_KEY )
     await dvf.register(keyPair.starkPublicKey)
   }
 

@@ -2,7 +2,7 @@ const DVF = require('./dvf')
 const _ = require('lodash')
 const { splitSymbol, prepareAmount } = require('dvf-utils')
 const { AlchemyProvider } = require('@ethersproject/providers')
-const { PAIR, PRIVATE_KEY, ALCHEMY_URL } = require('./config')
+const { PAIR,   ALCHEMY_URL } = require('./config')
 const { ChainId, Token, WETH, Fetcher, Route, Trade, TokenAmount, TradeType } = require('@uniswap/sdk')
 
 let dvf
@@ -14,9 +14,14 @@ let lastBidRoute, lastAskRoute, lastMidPrice
 let tokenQuote
 let tokenBase
 
+let quote 
+let base
+
+let starkPrivKey;
 onStartUp()
 
 let pair, routeBuy, routeSell, buySide, sellSide, midPrice
+
 async function marketMake () {
   const marketMakeImpl = async () => {
     
@@ -40,12 +45,18 @@ async function marketMake () {
 }
 
 async function onStartUp () {
+  [quote, base] = splitSymbol(PAIR)
+
   dvf = await DVF()
   await cancelOpenOrders()
   await syncBalances()
   await defineUniswapTokens()
-  console.log('Starting balances: ', balanceA, balanceB)
- 
+  console.log(`Starting balances: ${balanceA} ${quote} , ${balanceB} ${base}`)
+
+  starkPrivKey = dvf.stark.createPrivateKey()
+  console.log("using starkPrivKey",starkPrivKey)
+//    starkPrivKey = PRIVATE_KEY.substring(2)
+
   marketMake()
 }
 
@@ -71,7 +82,6 @@ async function syncBalances () {
     .keyBy('token')
     .mapValues('available')
     .value()
-  const [quote, base] = splitSymbol(PAIR)
   balanceA = dvf.token.fromQuantizedAmount(quote, balances[quote])
   balanceB = dvf.token.fromQuantizedAmount(base, balances[base])
   balanceA = balanceA === 'NaN' ? 0 : balanceA
@@ -89,18 +99,18 @@ async function placeOrder (amount) {
   amount = prepareAmount(amount, 3)
   if (amount === '0') return
 
-  const [quote, base] = splitSymbol(PAIR)
   let price
   if (amount > 0) {
     const buyAmountWei = dvf.token.toBaseUnitAmount(quote, 1)
     buySide = new Trade(lastBidRoute, new TokenAmount(tokenQuote, buyAmountWei), TradeType.EXACT_INPUT)
     price = buySide.executionPrice.toSignificant(6)
-    console.log('Place buy at:', price)
+    console.log(`Place buy at: ${price}  ${quote}`)
   } else {
     const sellAmountWei = dvf.token.toBaseUnitAmount(base, 1)
     sellSide = new Trade(lastAskRoute, new TokenAmount(tokenBase, sellAmountWei), TradeType.EXACT_INPUT)
     price = sellSide.executionPrice.invert().toSignificant(6)
-    console.log('Place sell at:', price)
+ 
+    console.log(`Place sell at: ${price} ${base} `)
   }
   if (!price) return
 
@@ -109,12 +119,11 @@ async function placeOrder (amount) {
       symbol: PAIR,
       amount,
       price,
-      starkPrivateKey: PRIVATE_KEY.substring(2)
+      starkPrivateKey: starkPrivKey
     })
   } catch (e) {
-    const error =   e.error || e
- 
-    console.warn(`Trade not completed: ${error.error}`)
+    const error =   e.error || e 
+    console.warn(`X ==> Trade not completed:`,error )
   }
 }
 
