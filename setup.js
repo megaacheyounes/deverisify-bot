@@ -5,10 +5,12 @@ const { PRIVATE_KEY } = require('./config')
 ;(async () => {
   const dvf = await DVF()
 
-  const fee = 0.1
+  const fee = 0.01
   const balance = await dvf.web3.eth.getBalance(dvf.config.ethAddress)
   const balanceEth = parseFloat(dvf.web3.utils.fromWei(balance, 'ether'))
   const depositValue = parseFloat(balanceEth.toFixed(2)) - fee
+
+
 
   if (depositValue <= 0) {
     console.warn('No balance on address: ', dvf.config.ethAddress)
