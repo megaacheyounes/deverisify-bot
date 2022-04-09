@@ -104,13 +104,13 @@ async function placeOrder (amount) {
     const buyAmountWei = dvf.token.toBaseUnitAmount(quote, 1)
     buySide = new Trade(lastBidRoute, new TokenAmount(tokenQuote, buyAmountWei), TradeType.EXACT_INPUT)
     price = buySide.executionPrice.toSignificant(6)
-    console.log(`Place buy at: ${price}  ${quote}`)
+    console.log(`Place order ==> buy ${quote} at: ${price} ${base}`)
   } else {
     const sellAmountWei = dvf.token.toBaseUnitAmount(base, 1)
     sellSide = new Trade(lastAskRoute, new TokenAmount(tokenBase, sellAmountWei), TradeType.EXACT_INPUT)
     price = sellSide.executionPrice.invert().toSignificant(6)
  
-    console.log(`Place sell at: ${price} ${base} `)
+    console.log(`Place order ==> sell ${base} at: ${price} ${quote}`)
   }
   if (!price) return
 
