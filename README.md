@@ -9,11 +9,11 @@ This bot allows high speed-trading on a completely non-custodial exchange.
 ## Instructions
 
 1. Create a new Ethereum wallet and fund with ETH
-2. `git clone https://github.com/megaacheyounes/uniswap-matching-bot.git`
+2. `git clone https://github.com/megaacheyounes/deverisify-bot.git`
 3. rename `config.example.js` to `config.js`, and add the following information:
-    1. Get an Alchemy URL (with API KEY) and add it to the file: [here](https://github.com/megaacheyounes/uniswap-matching-bot/blob/main/config.example.js#L5)
-    2. Add your Ethereum wallet private key (without prefix 0x): [here](https://github.com/megaacheyounes/uniswap-matching-bot/blob/main/config.example.js#L3)
-    3. Set the market pair you want to trade (default DAI/ETH) [here](https://github.com/megaacheyounes/uniswap-matching-bot/blob/main/config.example.js#L4)
+    1. Get an Alchemy URL (with API KEY) and add it to the file: [here](https://github.com/megaacheyounes/deverisify-bot/blob/main/config.example.js#L5)
+    2. Add your Ethereum wallet private key (without prefix 0x): [here](https://github.com/megaacheyounes/deverisify-bot/blob/main/config.example.js#L3)
+    3. Set the market pair you want to trade (default DAI/ETH) [here](https://github.com/megaacheyounes/deverisify-bot/blob/main/config.example.js#L4)
 
 Once you fill `config.js`, execute these commands in order:  
 
