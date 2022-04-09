@@ -18,12 +18,13 @@ onStartUp()
 
 let pair, routeBuy, routeSell, buySide, sellSide, midPrice
 async function marketMake () {
-  setInterval(async () => {
+  const marketMarketImpl = async () => {
+    
     pair = await Fetcher.fetchPairData(tokenQuote, tokenBase, provider)
     routeBuy = new Route([pair], tokenBase)
     routeSell = new Route([pair], tokenQuote)
     midPrice = routeBuy.midPrice.invert().toSignificant(4)
-    console.log(midPrice)
+    console.log("midPrice",midPrice)
     const haveOpenOrders = await checkIfOpenOrders()
     if (midPrice !== lastMidPrice || !haveOpenOrders) {
       lastMidPrice = midPrice
@@ -31,7 +32,11 @@ async function marketMake () {
       lastAskRoute = routeBuy
       replaceOrders()
     }
-  }, 180000)
+  }
+
+  marketMarketImpl()
+
+  setInterval(marketMarketImpl, 180000)
 }
 
 async function onStartUp () {
@@ -40,6 +45,7 @@ async function onStartUp () {
   await syncBalances()
   await defineUniswapTokens()
   console.log('Starting balances: ', balanceA, balanceB)
+ 
   marketMake()
 }
 
@@ -106,7 +112,8 @@ async function placeOrder (amount) {
       starkPrivateKey: PRIVATE_KEY.substring(2)
     })
   } catch (e) {
-    const error = (e.error && e.error.details && e.error.details.error) || {}
+    const error =   e.error || e
+ 
     console.warn(`Trade not completed: ${error.error}`)
   }
 }
